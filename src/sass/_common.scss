@@ -1,1 +1,44 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  background-color: black;
+}
+
+.input {
+  margin-right: 15px;
+}
+
+.load-more-btn {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.load-more-btn.is-hidden {
+  display: none;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: space-between;
+
+  padding: 30px;
+}
+
+.info-item {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.info-item__q {
+  display: flex;
+  flex-direction: column;
+}
