@@ -41,7 +41,11 @@ export default class NewsApiService {
     }
 
     createGallery() {
-        this.gallery = new SimpleLightbox('.gallery a');
+        this.gallery = new SimpleLightbox('.gallery a',{
+            captions: true,
+            captionsData: 'alt',
+            captionDelay: 250,
+        });
   }
 
     updateGallery() {

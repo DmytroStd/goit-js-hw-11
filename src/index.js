@@ -23,7 +23,7 @@ function onSearch(e) {
     e.preventDefault();
 
     newsApiService.query = e.currentTarget.elements.query.value;
-    console.log(newsApiService.query);
+
     if (newsApiService.query === '') {
         Notiflix.Notify.warning('введіть щось для пошуку')
         loadMoreBtn.disabled();
@@ -38,7 +38,7 @@ function onSearch(e) {
         return appendTotalHitsMarkup('');
     }
     })); 
-    
+
     Notiflix.Notify.success('"Hooray! We found totalHits images."');
     loadMoreBtn.show();
     newsApiService.resetPage();
