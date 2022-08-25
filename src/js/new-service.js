@@ -5,6 +5,7 @@ import axios from "axios"
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '29456964-f9d4d1660510bfc9fb16f8b0f';
 export default class NewsApiService {
+    #totalHits = 500
     options = {
         url: '',
         method: 'get',
@@ -45,17 +46,26 @@ export default class NewsApiService {
     }
 
     createGallery() {
-        this.gallery = new SimpleLightbox('.gallery a',{
+        this.gallery = new SimpleLightbox('.gallery a', {
             captions: true,
             captionsData: 'alt',
             captionDelay: 250,
         });
-  }
+    }
 
     updateGallery() {
         this.gallery.refresh();
-  }
     }
+
+    get totalPage() {
+        return Math.ceil(this.#totalHits / this.options.params.per_page)
+    }
+
+    get currentPage() {
+        return this.options.params.page
+    }
+    
+}
 
    // constructor() {
     //     // this.searchQuery = '';
