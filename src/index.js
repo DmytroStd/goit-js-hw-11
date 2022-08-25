@@ -20,35 +20,46 @@ refs.searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click', fetchHits);
 
 function onSearch(e) {
-    e.preventDefault();
+    e.preventDefault(); 
+    console.log(e.currentTarget.elements.query.value);
+    newsApiService.setQuery(e.currentTarget.elements.query.value);
 
-    newsApiService.query = e.currentTarget.elements.query.value;
-
-    if (newsApiService.query === '') {
+    if (newsApiService.getQuery() === '') {
         Notiflix.Notify.warning('введіть щось для пошуку')
         loadMoreBtn.disabled();
         return appendTotalHitsMarkup('');
-    } else if (newsApiService.fetchhits().then(data => {
-        if (data.length === 0) {
+    } else if (newsApiService.fetchhits().then(({ hits }) => {
+        console.log(hits);
+    
+        if (hits.length === 0) {
             Notiflix.Notify.failure('Sorry, there are no more images matching your search query. Please try new search.',
             );
-            loadMoreBtn.hide();   
-        } else {
-         loadMoreBtn.disabled();
-        return appendTotalHitsMarkup('');
+            loadMoreBtn.hide();
+        }
+    
+        //  loadMoreBtn.disabled();
+        // return appendTotalHitsMarkup('');
     }
-    })); 
-
-    Notiflix.Notify.success('"Hooray! We found totalHits images."');
-    loadMoreBtn.show();
-    newsApiService.resetPage();
-    clearTotalHitsContainer()
-    fetchHits()
+    ));
+   newsApiService.fetchhits().then(({ totalHits }) => {
+        // console.log(hits);
+        // if (hits.length >= 40) {
+            // console.log('inside >=40');
+            Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+            loadMoreBtn.show();
+            newsApiService.resetPage();
+            clearTotalHitsContainer()
+            fetchHits()
+        //}
+        });
 }
 
 function fetchHits() {
+    newsApiService.incrementPage();
     loadMoreBtn.disabled();
-    newsApiService.fetchhits().then(hits => { 
+    newsApiService.fetchhits().then(({ hits }) => {
+        console.log({ hits });
+        console.log(hits);
         appendTotalHitsMarkup(hits);
         loadMoreBtn.enable();
 });

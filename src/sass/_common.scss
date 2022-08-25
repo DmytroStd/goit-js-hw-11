@@ -1,10 +1,17 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   text-decoration: none;
 }
 
 a {
+  color: white;
   text-decoration: none;
 }
 
@@ -21,12 +28,22 @@ a {
 .input {
   margin-right: 15px;
   height: 30px;
-  width: 250px;
+  width: 300px;
   color: #000;
   background-color: aliceblue;
   border: 1px solid rgba(0, 0, 0, 0);
   border-radius: 5px;
   font-style: unset;
+}
+.btn {
+  background-color: aliceblue;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 5px;
+  font-style: unset;
+
+  height: 30px;
+
+  cursor: pointer;
 }
 
 .load-more-btn {
@@ -34,6 +51,16 @@ a {
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
+
+  background-color: aliceblue;
+  // border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 5px;
+  font-style: unset;
+
+  height: 30px;
+  margin-bottom: 20px;
+
+  cursor: pointer;
 }
 
 .load-more-btn.is-hidden {
@@ -52,8 +79,16 @@ a {
 .photo-card {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   border: 4px;
-  background-color: lightgray;
+  background-color: black;
   border-radius: 10px;
+}
+
+.photo-card:hover,
+.photo-card:focus {
+  background-color: silver;
+  color: black;
+  box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.08),
+    0px 2px 2px rgba(0, 0, 0, 0.12);
 }
 
 .info-item {
