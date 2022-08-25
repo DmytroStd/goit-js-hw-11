@@ -16,6 +16,7 @@ const loadMoreBtn = new LoadMoreBtn({
     hidden: true,
 });
 const newsApiService = new NewsApiService();
+
 refs.searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click', fetchHits);
 
@@ -40,8 +41,8 @@ async function onSearch(e) {
             Notiflix.Notify.success(`Hooray! We found ${data.total} images.`);
             loadMoreBtn.show();
             newsApiService.resetPage();
-            
-           fetchHits()
+            appendTotalHitsMarkup(data.hits);
+            newsApiService.incrementPage();
         }
     };
 }
@@ -57,6 +58,9 @@ async function fetchHits() {
        loadMoreBtn.disabled(); 
     }
 }
+
+
+
 
 function appendTotalHitsMarkup(hits) {
     refs.hitsConteiner.insertAdjacentHTML('beforeend', hitTpl(hits));
