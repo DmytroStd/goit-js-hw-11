@@ -21,7 +21,7 @@ loadMoreBtn.refs.button.addEventListener('click', fetchHits);
 
 function onSearch(e) {
     e.preventDefault(); 
-    console.log(e.currentTarget.elements.query.value);
+    //console.log(e.currentTarget.elements.query.value);
     newsApiService.setQuery(e.currentTarget.elements.query.value);
 
     if (newsApiService.getQuery() === '') {
@@ -29,9 +29,8 @@ function onSearch(e) {
         loadMoreBtn.disabled();
         return appendTotalHitsMarkup('');
     } else if (newsApiService.fetchhits().then(({ hits }) => {
-        console.log(hits);
-    
-        if (hits.length === 0) {
+        //console.log(hits);
+            if (hits.length === 0) {
             Notiflix.Notify.failure('Sorry, there are no more images matching your search query. Please try new search.',
             );
             loadMoreBtn.hide();
@@ -41,15 +40,17 @@ function onSearch(e) {
         // return appendTotalHitsMarkup('');
     }
     ));
-   newsApiService.fetchhits().then(({ totalHits }) => {
+   newsApiService.fetchhits().then(({ total }) => {
         // console.log(hits);
         // if (hits.length >= 40) {
             // console.log('inside >=40');
-            Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+       if(total> 0) {
+            Notiflix.Notify.success(`Hooray! We found ${total} images.`);
             loadMoreBtn.show();
             newsApiService.resetPage();
             clearTotalHitsContainer()
-            fetchHits()
+           fetchHits()
+           }
         //}
         });
 }
@@ -58,8 +59,8 @@ function fetchHits() {
     newsApiService.incrementPage();
     loadMoreBtn.disabled();
     newsApiService.fetchhits().then(({ hits }) => {
-        console.log({ hits });
-        console.log(hits);
+        //console.log({ hits });
+        //console.log(hits);
         appendTotalHitsMarkup(hits);
         loadMoreBtn.enable();
 });

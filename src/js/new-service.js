@@ -21,15 +21,11 @@ export default class NewsApiService {
         timeout: 1000,
         responseType: 'json',
     };
-    // constructor() {
-    //     // this.searchQuery = '';
-    //     // this.page = 1;
-    // };
 
     async fetchhits() {
         const responce = await  axios.request(this.options);
-        const { hits, totalHits } = responce.data;
-        return { hits, totalHits };
+        const { hits, total } = responce.data;
+        return { hits, total };
     }
       
     incrementPage() {
@@ -41,7 +37,7 @@ export default class NewsApiService {
     }
 
     getQuery() {
-        return this.searchQuery
+        return this.options.params.q 
     }
 
     setQuery(newQuery) {
@@ -61,13 +57,18 @@ export default class NewsApiService {
   }
     }
 
+   // constructor() {
+    //     // this.searchQuery = '';
+    //     // this.page = 1;
+    // };
+
   //const url = `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`;
 
     //    return fetch(url)
     //     .then(r => r.json())
-    //     .then(({hits, totalHits}) => {
-    //     //  console.log(hits,  totalHits)
+    //     .then(({hits, total}) => {
+    //     //  console.log(hits,  total)
     //     this.incrementPage()
     //     // console.log(this)
-    //     return {hits, totalHits};
+    //     return {hits, total};
     //     });
