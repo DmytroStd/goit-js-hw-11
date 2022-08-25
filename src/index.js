@@ -1,75 +1,73 @@
 import './sass/index.scss'
-import NewsApiService from './js/new-service'
-import hitTpl from './js/templates/hit.hbs';
+//import Notiflix from 'notiflix';
+//import SimpleLightbox from "simplelightbox";
+//import "simplelightbox/dist/simple-lightbox.min.css";
+
+//import NewsApiService from './js/components/fetch-api'
+import { refs } from './js/components/refs.js'
+import onSearch from './js/components/onsearch-hits'
+import fetchHits from './js/components/fetch-hits';
+//import appendTotalHitsMarkup from './js/components/append-hits'
+//import clearTotalHitsContainer from './js/components/clear-container'
 import LoadMoreBtn from './js/components/load-more-btn';
-import Notiflix from 'notiflix';
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
 
-const refs = {
-    searchForm: document.querySelector('.js-search-form'),
-    hitsConteiner: document.querySelector('.gallery'),
-};
-
-const loadMoreBtn = new LoadMoreBtn({
-    selector: '.load-more-btn',
-    hidden: true,
-});
-const newsApiService = new NewsApiService();
+// const loadMoreBtn = new LoadMoreBtn({
+//     selector: '.load-more-btn',
+//     hidden: true,
+// });
+// const newsApiService = new NewsApiService();
 
 refs.searchForm.addEventListener('submit', onSearch);
-loadMoreBtn.refs.button.addEventListener('click', fetchHits);
+refs.loadMoreBtn.refs.button.addEventListener('click', fetchHits);
 
-async function onSearch(e) {
-    e.preventDefault(); 
-    console.log('test');
-    newsApiService.setQuery(e.currentTarget.elements.query.value);
-    clearTotalHitsContainer();
+// async function onSearch(e) {
+//     e.preventDefault();
+//     newsApiService.setQuery(e.currentTarget.elements.query.value);
+//     clearTotalHitsContainer();
    
+//     if (newsApiService.getQuery() === '') {
+//         Notiflix.Notify.warning('введіть щось для пошуку')
+//         loadMoreBtn.disabled();
+//         return appendTotalHitsMarkup('');
+//     } else {
+//         const data = await newsApiService.fetchhits();
 
-    if (newsApiService.getQuery() === '') {
-        Notiflix.Notify.warning('введіть щось для пошуку')
-        loadMoreBtn.disabled();
-        return appendTotalHitsMarkup('');
-    } else {
-        const data = await newsApiService.fetchhits();
+//         if (data.hits.length === 0) {
+//             Notiflix.Notify.failure('Вибачте, немає заображень по вашому запиту. Будь-ласка спробуйте ще раз!');
+//             loadMoreBtn.hide();
+//         } else {
+//             Notiflix.Notify.success(`Уиии! Ми знайшли ${data.total} зображень.`);
+//             loadMoreBtn.show();
+//             loadMoreBtn.enable();
+//             newsApiService.resetPage();
+//             appendTotalHitsMarkup(data.hits);
+//             newsApiService.incrementPage();
+//         }
+//     };
+// }
 
-        if (data.hits.length === 0) {
-            Notiflix.Notify.failure('Sorry, there are no more images matching your search query. Please try new search.');
-            loadMoreBtn.hide();
-        } else {
-            Notiflix.Notify.success(`Hooray! We found ${data.total} images.`);
-            loadMoreBtn.show();
-            newsApiService.resetPage();
-            appendTotalHitsMarkup(data.hits);
-            newsApiService.incrementPage();
-        }
-    };
-}
+// async function fetchHits() {
+//     newsApiService.incrementPage();
+//     loadMoreBtn.disabled();
 
-async function fetchHits() {
-    newsApiService.incrementPage();
-        loadMoreBtn.disabled();
-        await newsApiService.fetchhits().then(({ hits }) => {
-        appendTotalHitsMarkup(hits);
-        loadMoreBtn.enable();
-        });
-    if (newsApiService.currentPage + 1 > newsApiService.totalPage) {
-       loadMoreBtn.disabled(); 
-    }
-}
+//     const callNewHits = await newsApiService.fetchhits();
+//     const { hits } = callNewHits;
+//     appendTotalHitsMarkup(hits);
+//     loadMoreBtn.enable();
 
+//     if (newsApiService.currentPage + 1 > newsApiService.totalPage) {
+//        loadMoreBtn.disabled(); 
+//     }
+// }
 
+// function appendTotalHitsMarkup(hits) {
+//     refs.hitsConteiner.insertAdjacentHTML('beforeend', hitTpl(hits));
+//     newsApiService.createGallery();
+// }
 
-
-function appendTotalHitsMarkup(hits) {
-    refs.hitsConteiner.insertAdjacentHTML('beforeend', hitTpl(hits));
-    newsApiService.createGallery();
-}
-
-function clearTotalHitsContainer() {
-    refs.hitsConteiner.innerHTML = '';
-}
+// function clearTotalHitsContainer() {
+//     refs.hitsConteiner.innerHTML = '';
+// }
 
 
 
